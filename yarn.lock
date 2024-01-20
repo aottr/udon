@@ -544,6 +544,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dotenv@npm:^16.3.2":
+  version: 16.3.2
+  resolution: "dotenv@npm:16.3.2"
+  checksum: a87d62cef0810b670cb477db1a24a42a093b6b428c9e65c185ce1d6368ad7175234b13547718ba08da18df43faae4f814180cc0366e11be1ded2277abc4dd22e
+  languageName: node
+  linkType: hard
+
 "eastasianwidth@npm:^0.2.0":
   version: 0.2.0
   resolution: "eastasianwidth@npm:0.2.0"
@@ -1886,6 +1893,7 @@ __metadata:
     "@types/mongoose": "npm:^5.11.97"
     "@types/node": "npm:^20.11.5"
     "@types/pino": "npm:^7.0.5"
+    dotenv: "npm:^16.3.2"
     fastify: "npm:^4.25.2"
     fastify-plugin: "npm:^4.5.1"
     fastify-tsconfig: "npm:^2.0.0"

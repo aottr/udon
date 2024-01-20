@@ -2,11 +2,13 @@ import { Schema, Document, model, Model } from 'mongoose';
 
 export interface INoodleAttrs {
     name: string;
+    description?: string;
     entries: number;
 }
 
 export interface INoodleDoc extends Document {
     name: string;
+    description?: string;
     entries: number;
 }
 
@@ -18,7 +20,13 @@ export const NoodleSchema = new Schema(
     {
         name: {
             type: String,
-            required: true
+            required: true,
+            unique: true
+        },
+        description: {
+            type: String,
+            required: false,
+            default: ''
         },
         entries: {
             type: Number,

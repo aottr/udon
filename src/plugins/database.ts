@@ -31,12 +31,14 @@ const ConnectDB: FastifyPluginAsync<IDbPluginOptions> = async (
         mongoose.connection.on('disconnected', () => {
             fastify.log.error({ actor: 'MongoDB' }, 'disconnected');
         });
-        await mongoose.connect(options.uri);
-
+        const db = await mongoose.connect(options.uri);
+        log.info(db.version);
         const models: IModels = { Noodle };
         fastify.decorate('db', { models });
     } catch (error) {
         log.error(error);
+    } finally {
+
     }
 };
 export default fp(ConnectDB);

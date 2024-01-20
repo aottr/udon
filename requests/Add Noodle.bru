@@ -1,0 +1,17 @@
+meta {
+  name: Add Noodle
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{host}}/v1/noodle
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "ott"
+  }
+}

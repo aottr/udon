@@ -1,0 +1,17 @@
+meta {
+  name: Delete Noodle
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{host}}/v1/noodle/ott
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "otter"
+  }
+}

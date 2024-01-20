@@ -1,4 +1,25 @@
 {
   "name": "udon",
-  "packageManager": "yarn@4.0.2"
+  "type": "commonjs",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node index.js",
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/app.ts"
+  },
+  "packageManager": "yarn@4.0.2",
+  "dependencies": {
+    "fastify": "^4.25.2",
+    "fastify-plugin": "^4.5.1",
+    "mongoose": "^8.1.0",
+    "pino": "^8.17.2"
+  },
+  "devDependencies": {
+    "@types/mongoose": "^5.11.97",
+    "@types/node": "^20.11.5",
+    "@types/pino": "^7.0.5",
+    "fastify-tsconfig": "^2.0.0",
+    "nodemon": "^3.0.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
 }

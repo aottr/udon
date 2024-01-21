@@ -1,0 +1,17 @@
+meta {
+  name: Update Image
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{host}}/v1/noodle/dook/image/65ac5ec09ea3eef9bbd203f0
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "otter"
+  }
+}

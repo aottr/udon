@@ -71,6 +71,30 @@ const ImageRoute = async (fastify: FastifyInstance) => {
         }
     });
 
+    fastify.get<{ Params: INoodleParams }>('/random', async (request, reply) => {
+
+        try {
+            const { Noodle } = fastify.db.models;
+            const noodle = await Noodle.findOne({ name: request.params.noodleId });
+            if (!noodle) {
+                return reply.callNotFound();
+            }
+            if (!noodle.images.length) {
+                return reply.callNotFound();
+            }
+            reply.code(200).send({
+                data: await noodle.getRandomImage(),
+                statusCode: 200
+            });
+        } catch (err) {
+            request.log.error(err);
+            reply.code(500).send({
+                statusCode: 500,
+                message: 'Internal Server Error'
+            });
+        }
+    });
+
     fastify.post<{ Params: INoodleParams; Body: IImageAttrs }>('/', async (request, reply) => {
 
         try {

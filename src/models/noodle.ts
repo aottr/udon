@@ -31,7 +31,6 @@ export interface INoodleDoc extends Document {
     description?: string;
     images: IImageDoc[];
     addImage(image: IImageAttrs): Promise<INoodleDoc>;
-    getImage(imageId: string): Promise<IImageDoc | null>;
     getRandomImage(): Promise<IImageDoc | null>;
 }
 
@@ -98,11 +97,6 @@ NoodleSchema.methods.getRandomImage = async function () {
     const randomIndex = Math.floor(Math.random() * this.images.length);
     return this.images[randomIndex];
 };
-
-NoodleSchema.methods.getImage = async function (imageId: string): Promise<IImageDoc | null> {
-    const image = this.images.find((image: IImageDoc) => image._id.toString() === imageId);
-    return image || null;
-}
 
 NoodleSchema.methods.addImage = async function (image: IImageAttrs) {
     this.images.push(image);

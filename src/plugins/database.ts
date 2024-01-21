@@ -4,7 +4,7 @@ import fp from 'fastify-plugin';
 import mongoose from 'mongoose';
 import pino from 'pino';
 
-import { Noodle, INoodleModel } from '../models/noodleModel';
+import { Noodle, INoodleModel } from '../models/noodle';
 
 const log = pino({ level: 'info' })
 

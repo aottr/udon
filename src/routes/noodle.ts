@@ -5,12 +5,17 @@ import {
 
 import ImageRoute from './image';
 import { IDb } from '../plugins/database';
-import { INoodleAttrs } from '../models/noodleModel';
+import { INoodleAttrs } from '../models/noodle';
 
 declare module 'fastify' {
     export interface FastifyInstance {
         db: IDb;
     }
+}
+
+export interface IPaginationQuery {
+    page?: string;
+    limit?: string;
 }
 
 interface INoodleParams {
@@ -19,13 +24,18 @@ interface INoodleParams {
 
 const NoodleRoute = async (fastify: FastifyInstance) => {
 
-    fastify.get('/', async (request, reply: FastifyReply) => {
+    fastify.get<{ Querystring: IPaginationQuery }>('/', async (request, reply: FastifyReply) => {
 
         try {
             const { Noodle } = fastify.db.models;
-            const noodles = await Noodle.find({});
+            const page = parseInt(request.query.page || '1', 10);
+            const limit = parseInt(request.query.limit || '50', 10);
+            const skip = (page - 1) * limit;
+            const noodles = await Noodle.find({}).select(['name', 'description', '-_id']).skip(skip).limit(limit);
             reply.code(200).send({
                 data: noodles,
+                page,
+                limit,
                 statusCode: 200
             });
         }
@@ -65,7 +75,7 @@ const NoodleRoute = async (fastify: FastifyInstance) => {
         }
     });
 
-    fastify.get<{ Params: INoodleParams }>('/:noodleId', async (request, reply) => {
+    fastify.get<{ Params: INoodleParams }>('/:noodleId', async (request, reply: FastifyReply) => {
 
         try {
             const { Noodle } = fastify.db.models;
@@ -74,7 +84,11 @@ const NoodleRoute = async (fastify: FastifyInstance) => {
                 return reply.callNotFound();
             }
             reply.code(200).send({
-                data: noodle,
+                data: {
+                    name: noodle.name,
+                    description: noodle.description,
+                    entries: noodle.images.length
+                },
                 statusCode: 200
             });
         } catch (err) {
@@ -86,7 +100,7 @@ const NoodleRoute = async (fastify: FastifyInstance) => {
         }
     });
 
-    fastify.put<{ Params: INoodleParams, Body: INoodleAttrs }>('/:noodleId', async (request, reply) => {
+    fastify.put<{ Params: INoodleParams, Body: INoodleAttrs }>('/:noodleId', async (request, reply: FastifyReply) => {
 
         try {
             const { Noodle } = fastify.db.models;
@@ -108,7 +122,7 @@ const NoodleRoute = async (fastify: FastifyInstance) => {
         }
     });
 
-    fastify.delete<{ Params: INoodleParams }>('/:noodleId', async (request, reply) => {
+    fastify.delete<{ Params: INoodleParams }>('/:noodleId', async (request, reply: FastifyReply) => {
 
         try {
             const { Noodle } = fastify.db.models;

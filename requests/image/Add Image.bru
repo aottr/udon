@@ -1,0 +1,21 @@
+meta {
+  name: Add Image
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{host}}/v1/noodle/dook/image
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "munchies",
+    "url": "https://pbs.twimg.com/media/GEUVkZGbkAAv-tH?format=jpg&name=medium",
+    "tags": [
+      "donut", "munchies"
+    ]
+  }
+}
